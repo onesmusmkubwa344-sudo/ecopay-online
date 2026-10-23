@@ -297,7 +297,19 @@ label{display:block;font-size:12.5px;font-weight:600;color:#334155;margin-bottom
 <div id="toast" class="toast-notification"></div>
 
 <script>
-const API_BASE = 'https://ecopay-payment-rcpt.onrender.com';
+/* ────────────────────────────────────────────────────────────────
+   API BASE — auto-detects the host serving this page.
+   Works on Render, Railway, localhost, or any custom domain.
+   ──────────────────────────────────────────────────────────────── */
+const API_BASE = (function () {
+  // If opened directly from disk (file://), fall back to the live backend
+  if (window.location.protocol === 'file:') {
+    return 'https://ecopay-online-3srh.onrender.com';
+  }
+  // Otherwise, call the same host that served this page
+  return window.location.origin;
+})();
+
 const STORAGE_KEY_RECEIPTS = 'ecocash_receipts_history';
 const STORAGE_KEY_CURRENT  = 'ecocash_current_receipt';
 
